@@ -2,7 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <istream>
-#include <unordered_set>
+#include <unordered_map>
 const std::string TEST_FOLDER = "\\tests\\";
 //State will store our randomly generated state
 struct State {
@@ -25,7 +25,7 @@ namespace std {
 unsigned int xorShift(unsigned int seed, int r1, int r2);
 int main(){
   // code here
-  std::unordered_set<State> states;
+  std::unordered_map<State, int> states;
   State state = {1, 2};
   int warmup, cycle;
 
@@ -33,23 +33,21 @@ int main(){
   std::cin >> seed >> N >> min >> max;
   //Keep track of inital seed
   state.a = seed;
-  unsigned int i;
-  for(i = N; i >= 1; i--)
+  int id = 0;
+  while(true)
   {
     //Run xor shift
     seed = xorShift(seed, min, max);
-    //Get the new internal state
     state.b = seed;
     //If there is no repetition we are still in the warming phase
-    //Once the repetition starts we want to keep track of how long it repeats for
-    if (!states.contains(state)) {
-      warmup++;
+    if (states.contains(state)) {
+      warmup = states[state];
+      cycle = id - warmup;
+      break;
     }
-    else if (states.count(state) == 2) {
-      cycle++;
-    }
-    states.insert({state});
-
+    //put the new state in the hashtable
+    states.emplace(state, id);
+    id++;
   }
   std::cout << "The warmup period is: " << warmup << std::endl;
   std::cout << "The cycle period is: " << cycle << std::endl;

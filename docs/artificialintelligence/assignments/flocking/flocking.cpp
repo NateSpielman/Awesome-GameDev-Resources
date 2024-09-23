@@ -139,6 +139,7 @@ int main() {
   vector<Boid> currentState, newState;
   // Input Reading
   cin >> cohesion.radius >> separation.radius >> separation.maxForce >> alignment.radius >> cohesion.k >> separation.k >> alignment.k >> numberOfBoids;
+  getline(cin, line);
   for (int i = 0; i < numberOfBoids; i++)
   {
     Boid b;
