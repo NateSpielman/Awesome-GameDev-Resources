@@ -6,7 +6,7 @@
 const std::string TEST_FOLDER = "\\tests\\";
 //State will store our randomly generated state
 struct State {
-  int a, b;
+  short a, b;
 
   bool operator==(const State& other) const {
     return a == other.a && b == other.b;
@@ -25,12 +25,13 @@ namespace std {
 unsigned int xorShift(unsigned int seed, int r1, int r2);
 int main(){
   // code here
-  std::unordered_map<State, int> states;
+  std::unordered_map<State, short> states;
   State state = {1, 2};
   int warmup, cycle;
 
-  unsigned int seed, N, min, max;
-  std::cin >> seed >> N >> min >> max;
+  unsigned int seed, min, max;
+  std::cout<<"Enter a seed, followed by the min and max numbers: ";
+  std::cin >> seed >> min >> max;
   //Keep track of inital seed
   state.a = seed;
   int id = 0;
